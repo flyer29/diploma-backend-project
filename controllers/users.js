@@ -18,8 +18,6 @@ const getMyInfo = (req, res, next) => {
 const createUser = (req, res, next) => {
   const {
     name,
-    about,
-    avatar,
     email,
     password,
   } = req.body;
@@ -30,8 +28,6 @@ const createUser = (req, res, next) => {
     .then((hash) => {
       User.create({
         name,
-        about,
-        avatar,
         email,
         password: hash,
       })
@@ -39,8 +35,6 @@ const createUser = (req, res, next) => {
           res.send({
             _id: user._id,
             name: user.name,
-            about: user.about,
-            avatar: user.avatar,
             email: user.email,
           });
         })

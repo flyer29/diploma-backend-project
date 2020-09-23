@@ -3,9 +3,9 @@ const NotFoundError = require('../errors/not-found-error');
 const ForbiddenError = require('../errors/forbidden-error');
 
 const getAllMyArticles = (req, res, next) => {
-  Article.find(req.user._id)
+  Article.find({ owner: req.user._id })
     .then((articles) => {
-      if (!articles) {
+      if (articles.length === 0) {
         throw new NotFoundError('У вас нет сохранённых статей');
       }
       res.send({ data: articles });
