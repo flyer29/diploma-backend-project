@@ -11,7 +11,6 @@ const usersRouter = require('./routes/users');
 const { createUser, login } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-// const { urlValidation } = require('./config');
 const NotFoundError = require('./errors/not-found-error');
 
 const { PORT = 3000 } = process.env;
