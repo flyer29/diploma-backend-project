@@ -5,6 +5,9 @@ const ForbiddenError = require('../errors/forbidden-error');
 const getAllMyArticles = (req, res, next) => {
   Article.find(req.user._id)
     .then((articles) => {
+      if (!articles) {
+        throw new NotFoundError('У вас нет сохранённых статей');
+      }
       res.send({ data: articles });
     })
     .catch(next);
