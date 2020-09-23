@@ -6,12 +6,12 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const { celebrate, Joi, errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
-const cardsRouter = require('./routes/cards');
+const articleRouter = require('./routes/articles');
 const usersRouter = require('./routes/users');
 const { createUser, login } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { urlValidation } = require('./config');
+// const { urlValidation } = require('./config');
 const NotFoundError = require('./errors/not-found-error');
 
 const { PORT = 3000 } = process.env;
@@ -37,14 +37,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(requestLogger);
-app.use('/cards', auth, cardsRouter);
+app.use('/articles', auth, articleRouter);
 app.use('/users', auth, usersRouter);
 
 app.use('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    about: Joi.string().required().min(2).max(30),
-    avatar: Joi.string().required().custom(urlValidation),
     email: Joi.string().required().email(),
     password: Joi.string().required().alphanum().min(8),
   }),
