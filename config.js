@@ -3,7 +3,7 @@ const validator = require('validator');
 const BadRequestError = require('./errors/bad-request-error');
 
 const apiLink = 'mongodb://localhost:27017/news-explorer';
-const secretKey = 'secret-key';
+const secretKey = 'dev-secret';
 
 const passwordSchema = new PasswordValidator();
 

@@ -28,7 +28,7 @@ const urlDoesNotExist = () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 };
 
-mongoose.connect(`${apiLink}`, {
+mongoose.connect(apiLink, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
