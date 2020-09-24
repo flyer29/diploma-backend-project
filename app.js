@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
-const rateLimit = require('express-rate-limit');
 const {
   usersRouter,
   articleRouter,
@@ -17,13 +16,11 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/error-handler');
 const NotFoundError = require('./errors/not-found-error');
 const { apiLink } = require('./config');
+const { limiter } = require('./config');
 
 const { PORT = 3000 } = process.env;
 const app = express();
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-});
+
 const urlDoesNotExist = () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 };
