@@ -2,6 +2,9 @@ const PasswordValidator = require('password-validator');
 const validator = require('validator');
 const BadRequestError = require('./errors/bad-request-error');
 
+const apiLink = 'mongodb://localhost:27017/news-explorer';
+const secretKey = 'secret-key';
+
 const passwordSchema = new PasswordValidator();
 
 passwordSchema
@@ -21,4 +24,6 @@ const urlValidation = ((value) => {
 module.exports = {
   passwordSchema,
   urlValidation,
+  apiLink,
+  secretKey,
 };

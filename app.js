@@ -14,7 +14,9 @@ const {
 } = require('./routes/index');
 const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const errorHandler = require('./middlewares/error-handler');
 const NotFoundError = require('./errors/not-found-error');
+const { apiLink } = require('./config');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -26,7 +28,7 @@ const urlDoesNotExist = () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 };
 
-mongoose.connect('mongodb://localhost:27017/news-explorer', {
+mongoose.connect(`${apiLink}`, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -39,31 +41,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(requestLogger);
-app.use('/articles', auth, articleRouter);
-app.use('/users', auth, usersRouter);
-
 app.use('/signup', signupRouter);
 app.use('/signin', signinRouter);
+app.use('/articles', auth, articleRouter);
+app.use('/users', auth, usersRouter);
 app.use('*', urlDoesNotExist);
 app.use(errorLogger);
 app.use(errors());
-app.use((err, req, res, next) => {
-  const {
-    statusCode = 500,
-    message,
-    name,
-  } = err;
-  if (name === 'ValidationError') {
-    res.status(400).send({ message: `${message}` });
-    return;
-  }
-  res
-    .status(statusCode)
-    .send({
-      message: statusCode === 500
-        ? 'На сервере произошла ошибка'
-        : message,
-    });
-  next();
-});
+app.use(errorHandler);
 app.listen(PORT);
