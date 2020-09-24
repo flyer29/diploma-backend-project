@@ -4,10 +4,14 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
-const { celebrate, Joi, errors } = require('celebrate');
+const { errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
-const { usersRouter, articleRouter, signupRouter } = require('./routes/index');
-const { /* createUser, */ login } = require('./controllers/users');
+const {
+  usersRouter,
+  articleRouter,
+  signupRouter,
+  signinRouter,
+} = require('./routes/index');
 const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/not-found-error');
@@ -39,19 +43,7 @@ app.use('/articles', auth, articleRouter);
 app.use('/users', auth, usersRouter);
 
 app.use('/signup', signupRouter);
-/* app.use('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
-    password: Joi.string().required().alphanum().min(8),
-  }),
-}), createUser); */
-app.use('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().alphanum().min(8),
-  }),
-}), login);
+app.use('/signin', signinRouter);
 app.use('*', urlDoesNotExist);
 app.use(errorLogger);
 app.use(errors());
