@@ -11,18 +11,17 @@ const {
   signupRouter,
   signinRouter,
 } = require('./routes/index');
-const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { apiLink, limiter, messages } = require('./config');
+const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error-handler');
 const NotFoundError = require('./errors/not-found-error');
-const { apiLink } = require('./config');
-const { limiter } = require('./config');
 
 const { PORT = 3000 } = process.env;
 const app = express();
 
 const urlDoesNotExist = () => {
-  throw new NotFoundError('Запрашиваемый ресурс не найден');
+  throw new NotFoundError(messages.nonExistentUrl);
 };
 
 mongoose.connect(apiLink, {

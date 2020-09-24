@@ -6,7 +6,7 @@ const { passwordSchema } = require('../config');
 const { NODE_ENV, JWT_SECRET } = process.env;
 const BadRequestError = require('../errors/bad-request-error');
 const ConflictError = require('../errors/conflict-error');
-const { secretKey } = require('../config');
+const { secretKey, messages } = require('../config');
 
 const getMyInfo = (req, res, next) => {
   User.findById(req.user._id)
@@ -23,7 +23,7 @@ const createUser = (req, res, next) => {
     password,
   } = req.body;
   if (password === undefined || !passwordSchema.validate(password)) {
-    throw new BadRequestError('Необходимо указать пароль, состоящий как минимум из 8 символов, включающих в себя цифры и буквы');
+    throw new BadRequestError(messages.incorrectPassword);
   }
   bcrypt.hash(password, 10)
     .then((hash) => {
@@ -41,7 +41,7 @@ const createUser = (req, res, next) => {
         })
         .catch((err) => {
           if (err.name === 'MongoError' && err.code === 11000) {
-            const error = new ConflictError('Пользователь с таким email уже существует');
+            const error = new ConflictError(messages.nonUniqEmail);
             next(error);
           }
         });
