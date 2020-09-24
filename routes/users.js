@@ -1,8 +1,6 @@
 const usersRouter = require('express').Router();
 
-const {
-  getMyInfo,
-} = require('../controllers/users');
+const { getMyInfo } = require('../controllers/users');
 
 usersRouter.get('/me', getMyInfo);
 
