@@ -12,17 +12,13 @@ const {
   signinRouter,
 } = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { apiLink, limiter, messages } = require('./config');
+const { apiLink, limiter } = require('./config');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error-handler');
-const NotFoundError = require('./errors/not-found-error');
+const urlDoesNotExist = require('./controllers/url-does-not-exist');
 
 const { PORT = 3000 } = process.env;
 const app = express();
-
-const urlDoesNotExist = () => {
-  throw new NotFoundError(messages.nonExistentUrl);
-};
 
 mongoose.connect(apiLink, {
   useNewUrlParser: true,
