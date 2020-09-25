@@ -64,7 +64,7 @@
           "keyword": "some word",
           "title": "article title",
           "text": "some article text... ",
-          "date": "31.12.3030",
+          "date": "2020-09-25T20:50",
           "source": "some article source",
           "link": "https://somearticlelink.com",
           "image": "https://someimageforarticle.com"
