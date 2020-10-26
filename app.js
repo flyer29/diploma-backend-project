@@ -10,7 +10,7 @@ const corsOptions = {
   origin: [
     'https://mynwesapp.tk',
     'http://localhost:8080',
-    'https://flyer29.github.io//news-explorer-frontend',
+    'https://flyer29.github.io/news-explorer-frontend',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
