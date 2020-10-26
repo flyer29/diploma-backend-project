@@ -23,6 +23,8 @@ const corsOptions = {
   credentials: true,
 };
 
+
+
 const { errors } = require('celebrate');
 const {
   usersRouter,
@@ -45,6 +47,12 @@ mongoose.connect(apiLink, {
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
+});
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
 });
 
 app.use('*', cors(corsOptions));
