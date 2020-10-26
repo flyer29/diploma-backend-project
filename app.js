@@ -8,7 +8,7 @@ const cors = require('cors');
 
 const corsOptions = {
   origin: [
-    'https://mynwesapp.tk',
+    'https://api.mynwesapp.tk',
     'http://localhost:8080',
     'https://flyer29.github.io/news-explorer-frontend/',
   ],
@@ -16,7 +16,6 @@ const corsOptions = {
   preflightContinue: false,
   optionsSuccessStatus: 204,
   allowedHeaders: [
-    'Access-Control-Allow-Origin',
     'Content-Type',
     'origin',
     'x-access-token',
