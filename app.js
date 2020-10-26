@@ -10,7 +10,7 @@ const corsOptions = {
   origin: [
     'https://mynewsapp.tk',
     'http://localhost:8080',
-    'https://flyer29.github.io/news-explorer-frontend/',
+    'https://flyer29.github.io',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
@@ -22,8 +22,6 @@ const corsOptions = {
   ],
   credentials: true,
 };
-
-
 
 const { errors } = require('celebrate');
 const {
@@ -49,11 +47,11 @@ mongoose.connect(apiLink, {
   useUnifiedTopology: true,
 });
 
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://flyer29.github.io/news-explorer-frontend/');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
-});
+}); */
 
 app.use('*', cors(corsOptions));
 app.use(limiter);
