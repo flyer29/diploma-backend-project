@@ -62,7 +62,12 @@ const login = (req, res, next) => {
         maxAge: 3600000,
         httpOnly: true,
         sameSite: true,
-      }).end();
+      });
+      res.send({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      });
     })
     .catch(next);
 };
