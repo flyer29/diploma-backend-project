@@ -16,6 +16,7 @@ const corsOptions = {
   preflightContinue: false,
   optionsSuccessStatus: 204,
   allowedHeaders: [
+    'Access-Control-Allow-Origin',
     'Content-Type',
     'origin',
     'x-access-token',
