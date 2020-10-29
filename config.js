@@ -21,7 +21,7 @@ const messages = {
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: 500,
 });
 
 const passwordSchema = new PasswordValidator();
