@@ -3,7 +3,6 @@ const validator = require('validator');
 const rateLimit = require('express-rate-limit');
 const BadRequestError = require('./errors/bad-request-error');
 
-const apiLink = 'mongodb://localhost:27017/news-explorer';
 const secretKey = 'dev-secret';
 const messages = {
   emptyArticleList: 'У вас нет сохранённых статей',
@@ -42,7 +41,6 @@ const urlValidation = ((value) => {
 module.exports = {
   passwordSchema,
   urlValidation,
-  apiLink,
   secretKey,
   limiter,
   messages,

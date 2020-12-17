@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const corsOptions = {
   origin: [
+    'http://my-news-app.ru',
     'https://my-news-app.ru',
     'http://localhost:8080',
   ],
@@ -31,15 +32,15 @@ const {
   logoutRouter,
 } = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { apiLink, limiter } = require('./config');
+const { limiter } = require('./config');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error-handler');
 const urlDoesNotExist = require('./controllers/url-does-not-exist');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, API_LINK = 'mongodb://localhost:27017/news-explorer' } = process.env;
 const app = express();
 
-mongoose.connect(apiLink, {
+mongoose.connect(API_LINK, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
