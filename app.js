@@ -8,9 +8,8 @@ const cors = require('cors');
 
 const corsOptions = {
   origin: [
-    'https://mynewsapp.tk',
+    'https://my-news-app.ru',
     'http://localhost:8080',
-    'https://flyer29.github.io',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
