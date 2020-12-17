@@ -23,6 +23,23 @@ const limiter = rateLimit({
   max: 500,
 });
 
+const corsOptions = {
+  origin: [
+    'http://my-news-app.ru',
+    'https://my-news-app.ru',
+    'http://localhost:8080',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: [
+    'Content-Type',
+    'origin',
+    'x-access-token',
+  ],
+  credentials: true,
+};
+
 const passwordSchema = new PasswordValidator();
 passwordSchema
   .is()
@@ -41,6 +58,7 @@ const urlValidation = ((value) => {
 module.exports = {
   passwordSchema,
   urlValidation,
+  corsOptions,
   secretKey,
   limiter,
   messages,

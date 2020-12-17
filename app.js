@@ -5,37 +5,11 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const cors = require('cors');
-
-const corsOptions = {
-  origin: [
-    'http://my-news-app.ru',
-    'https://my-news-app.ru',
-    'http://localhost:8080',
-  ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: [
-    'Content-Type',
-    'origin',
-    'x-access-token',
-  ],
-  credentials: true,
-};
-
 const { errors } = require('celebrate');
-const {
-  usersRouter,
-  articleRouter,
-  signupRouter,
-  signinRouter,
-  logoutRouter,
-} = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { limiter } = require('./config');
-const auth = require('./middlewares/auth');
+const { limiter, corsOptions } = require('./config');
+const routes = require('./routes/index');
 const errorHandler = require('./middlewares/error-handler');
-const urlDoesNotExist = require('./controllers/url-does-not-exist');
 
 const { PORT = 3000, API_LINK = 'mongodb://localhost:27017/news-explorer' } = process.env;
 const app = express();
@@ -54,12 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(requestLogger);
-app.use('/signup', signupRouter);
-app.use('/signin', signinRouter);
-app.use('/logout', auth, logoutRouter);
-app.use('/articles', auth, articleRouter);
-app.use('/users', auth, usersRouter);
-app.use('*', urlDoesNotExist);
+app.use(routes);
 app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
